@@ -1,0 +1,39 @@
+{
+  "name": "shirt",
+  "version": "0.0.1",
+  "description": "Simple algebraic data types for javascript",
+  "license": "MIT",
+  "main": "./index.js",
+  "repository": "iansinnott/shirt",
+  "author": {
+    "name": "Ian Sinnott",
+    "email": "ian@iansinnott.com",
+    "url": "iansinnott.com"
+  },
+  "scripts": {
+    "test": "xo && ava",
+    "bump": "npm version patch -m \"v%s\"",
+    "bump:minor": "npm version minor -m \"v%s\"",
+    "bump:major": "npm version major -m \"v%s\"",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags",
+    "prepublish": "npm run build"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "functional",
+    "monads",
+    "maybe",
+    "either",
+    "validation"
+  ],
+  "dependencies": {
+    "ramda": "^0.23.0"
+  },
+  "devDependencies": {
+    "ava": "^0.17.0",
+    "xo": "^0.17.0"
+  }
+}
