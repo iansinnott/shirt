@@ -27,7 +27,7 @@ export const Right = (x) => ({
   toString: () => `Right(${x})`,
 });
 
-export const Left = (x: any) => ({
+export const Left = (x) => ({
   of: (x) => Left(x),
   map: (f) => Left(x),
   chain: (f) => Left(x),

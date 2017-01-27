@@ -15,7 +15,7 @@ import { tryCatch } from './Either.js';
  */
 export const IO = (f) => ({
   map: (g) => IO(compose(g, f)),
-  fold: (left: Function, right: Function) =>
+  fold: (left, right) =>
     tryCatch(f).fold(left, right),
 });
 
