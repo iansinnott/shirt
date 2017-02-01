@@ -20,6 +20,9 @@ export const IO = (f) => ({
     const next = g(f()); // Must return IO
     return next.fn();
   }),
+  ap: (io) => IO(() => {
+    return io.map(f()); // Does this work??
+  }),
   fold: (left, right) =>
     tryCatch(f).fold(left, right),
 });
