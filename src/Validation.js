@@ -1,4 +1,7 @@
-import { curry, curryN, T } from 'ramda';
+import curry from 'ramda/src/curry';
+import curryN from 'ramda/src/curryN';
+
+const T = () => true;
 
 import { isNothing } from './Maybe.js';
 

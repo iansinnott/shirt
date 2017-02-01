@@ -1,4 +1,4 @@
-import { curry } from 'ramda';
+import curry from 'ramda/src/curry';
 
 /**
  * Either itself is abstract and does not hav ea concrete implementation
@@ -20,20 +20,26 @@ function aliasMethod(method) {
 }
 
 export const Right = (x) => ({
-  of: (x) => Right(x),
+  isLeft: false,
+  isRight: true,
   map: (f) => Right(f(x)),
   chain: (f) => f(x),
   fold: (f, g) => g(x),
   toString: () => `Right(${x})`,
 });
 
+Right.of = x => Right(x);
+
 export const Left = (x) => ({
-  of: (x) => Left(x),
+  isLeft: true,
+  isRight: false,
   map: (f) => Left(x),
   chain: (f) => Left(x),
   fold: (f, g) => f(x),
   toString: () => `Left(${x})`,
 });
+
+Left.of = (x) => Left(x);
 
 export const fromNullable = (x) => isNothing(x) ? Left(null) : Right(x);
 

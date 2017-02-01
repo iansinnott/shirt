@@ -10,15 +10,17 @@ module.exports = {
     library: 'Shirt',
   },
 
-  // Ramda must be included in consumer env
-  externals: {
-    'ramda': {
-      commonjs: 'ramda',
-      commonjs2: 'ramda',
-      amd: 'ramda',
-      root: 'R', // Assume ramda is defined as window.R if it was loaded via script tag
-    },
-  },
+  // We could require that ramda be installed in whatever app is using this lib,
+  // but would that be a good idea? Unminified dist source goes from about 13k
+  // to about 36k without the use of externals
+  // externals: {
+  //   'ramda': {
+  //     commonjs: 'ramda',
+  //     commonjs2: 'ramda',
+  //     amd: 'ramda',
+  //     root: 'R', // Assume ramda is defined as window.R if it was loaded via script tag
+  //   },
+  // },
 
   module: {
     rules: [

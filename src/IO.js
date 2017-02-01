@@ -1,4 +1,4 @@
-import { compose } from 'ramda';
+import compose from 'ramda/src/compose';
 
 import { tryCatch } from './Either.js';
 
@@ -14,8 +14,14 @@ import { tryCatch } from './Either.js';
  * the end when it is `fold`ed.
  */
 export const IO = (f) => ({
+  fn: f,
   map: (g) => IO(compose(g, f)),
+  chain: (g) => IO(() => {
+    const next = g(f()); // Must return IO
+    return next.fn();
+  }),
   fold: (left, right) =>
     tryCatch(f).fold(left, right),
 });
 
+IO.of = x => IO(() => x);
