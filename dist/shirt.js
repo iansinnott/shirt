@@ -556,6 +556,11 @@ var IO = function IO(f) {
         return next.fn();
       });
     },
+    ap: function ap(io) {
+      return IO(function () {
+        return io.map(f()); // Does this work??
+      });
+    },
     fold: function fold(left, right) {
       return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Either_js__["tryCatch"])(f).fold(left, right);
     }
