@@ -1,6 +1,6 @@
 {
   "name": "shirt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple algebraic data types for javascript",
   "license": "MIT",
   "main": "./dist/shirt.js",
