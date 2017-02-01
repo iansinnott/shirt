@@ -20,9 +20,9 @@ export const IO = (f) => ({
     const next = g(f()); // Must return IO
     return next.fn();
   }),
-  ap: (io) => IO(() => {
-    return io.map(f()); // Does this work??
-  }),
+  ap: (io) => {
+    return io.map(f()); // Does this work?? If it doesnt check this: https://github.com/ramda/ramda-fantasy/blob/master/src/IO.js#L44
+  },
   fold: (left, right) =>
     tryCatch(f).fold(left, right),
 });

@@ -557,9 +557,7 @@ var IO = function IO(f) {
       });
     },
     ap: function ap(io) {
-      return IO(function () {
-        return io.map(f()); // Does this work??
-      });
+      return io.map(f()); // Does this work?? If it doesnt check this: https://github.com/ramda/ramda-fantasy/blob/master/src/IO.js#L44
     },
     fold: function fold(left, right) {
       return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Either_js__["tryCatch"])(f).fold(left, right);
