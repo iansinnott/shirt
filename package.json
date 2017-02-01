@@ -3,7 +3,7 @@
   "version": "0.0.4",
   "description": "Simple algebraic data types for javascript",
   "license": "MIT",
-  "main": "./index.js",
+  "main": "./dist/shirt.js",
   "repository": "iansinnott/shirt",
   "author": {
     "name": "Ian Sinnott",
@@ -32,7 +32,7 @@
     ]
   },
   "files": [
-    "index.js"
+    "dist/shirt.js"
   ],
   "keywords": [
     "functional",
