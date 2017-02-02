@@ -41,9 +41,7 @@
     "either",
     "validation"
   ],
-  "dependencies": {
-    "ramda": "^0.23.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ava": "^0.17.0",
     "babel-core": "^6.22.1",
@@ -51,7 +49,6 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-stage-1": "^6.22.0",
     "babel-register": "^6.22.0",
-    "webpack": "^2.2.0",
-    "xo": "^0.17.0"
+    "webpack": "^2.2.0"
   }
 }

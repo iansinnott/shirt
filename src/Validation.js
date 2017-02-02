@@ -1,5 +1,4 @@
-import curry from 'ramda/src/curry';
-import curryN from 'ramda/src/curryN';
+import { curry, curryN } from './helpers.js';
 
 const T = () => true;
 

@@ -1,4 +1,4 @@
-import compose from 'ramda/src/compose';
+import { compose } from './helpers.js';
 
 import { tryCatch } from './Either.js';
 

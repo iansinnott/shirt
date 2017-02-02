@@ -1,4 +1,4 @@
-import curry from 'ramda/src/curry';
+import { curry } from './helpers.js';
 
 /**
  * Either itself is abstract and does not hav ea concrete implementation
