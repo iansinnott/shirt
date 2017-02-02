@@ -31,6 +31,14 @@ import { compose, curry, curryN } from 'shirt';
 
 ## API
 
+### `Maybe`
+
+### `Either`
+
+### `IO`
+
+### `Validation`
+
 ## License
 
 MIT © [Ian Sinnott](https://www.iansinnott.com)
