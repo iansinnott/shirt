@@ -1,6 +1,6 @@
 import test from 'ava';
 
-import { compose, curry } from './helpers.js';
+import { compose, curry } from './';
 
 const split = (by) => (str) => str.split(by);
 const join = (by) => (str) => str.join(by);

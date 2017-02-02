@@ -81,37 +81,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _isNothing; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Maybe; });
-var _isNothing = function _isNothing(x) {
-  return x === null || x === undefined;
-};
-
-
-var Maybe = function Maybe(x) {
-  return {
-    map: function map(f) {
-      return Maybe(f(x));
-    },
-    fold: function fold(f) {
-      return f(x);
-    },
-    isNothing: function isNothing() {
-      return _isNothing(x);
-    },
-    toString: function toString() {
-      return 'Maybe(' + (_isNothing(x) ? 'Nothing' : x.toString()) + ')';
-    }
-  };
-};
-
-/***/ }),
-/* 1 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return curryN; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return curry; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return curryN; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return curry; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return compose; });
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -153,13 +124,42 @@ var compose = function compose() {
 };
 
 /***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return _isNothing; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Maybe; });
+var _isNothing = function _isNothing(x) {
+  return x === null || x === undefined;
+};
+
+
+var Maybe = function Maybe(x) {
+  return {
+    map: function map(f) {
+      return Maybe(f(x));
+    },
+    fold: function fold(f) {
+      return f(x);
+    },
+    isNothing: function isNothing() {
+      return _isNothing(x);
+    },
+    toString: function toString() {
+      return 'Maybe(' + (_isNothing(x) ? 'Nothing' : x.toString()) + ')';
+    }
+  };
+};
+
+/***/ }),
 /* 2 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Maybe_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Maybe_js__ = __webpack_require__(1);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Right", function() { return Right; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Left", function() { return Left; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fromNullable", function() { return fromNullable; });
@@ -247,7 +247,7 @@ var tryCatch = function tryCatch(f) {
 /**
  * Helper function to invoke the result of an either.
  */
-var either = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["a" /* curry */])(function (f, g, e) {
+var either = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["b" /* curry */])(function (f, g, e) {
   return e.fold(f, g);
 });
 
@@ -256,7 +256,7 @@ var either = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["a"
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_js__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_js__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Either_js__ = __webpack_require__(2);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return IO; });
 
@@ -307,8 +307,8 @@ IO.of = function (x) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_js__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Maybe_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Maybe_js__ = __webpack_require__(1);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Success", function() { return Success; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Failure", function() { return Failure; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fromNullable", function() { return fromNullable; });
@@ -395,7 +395,7 @@ var successOr = function successOr(x) {
  * simply to make the validation calls more concise, but for now the API is
  * defined that way.
  */
-var validate = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["a" /* curry */])(function (predicate, f, x) {
+var validate = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["b" /* curry */])(function (predicate, f, x) {
   var failure = typeof f === 'function' ? f(x) : f;
   return predicate(x) ? Success(x) : Failure.of(failure);
 });
@@ -416,7 +416,7 @@ var combineValidations = function combineValidations() {
 
   return args.reduce(function (agg, validation) {
     return agg.ap(validation);
-  }, Success(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["b" /* curryN */])(args.length, T)));
+  }, Success(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["a" /* curryN */])(args.length, T)));
 };
 
 /***/ }),
@@ -425,7 +425,7 @@ var combineValidations = function combineValidations() {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Maybe_js__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Maybe_js__ = __webpack_require__(1);
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "isNothing", function() { return __WEBPACK_IMPORTED_MODULE_0__Maybe_js__["a"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "Maybe", function() { return __WEBPACK_IMPORTED_MODULE_0__Maybe_js__["b"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Either_js__ = __webpack_require__(2);
@@ -434,6 +434,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "IO", function() { return __WEBPACK_IMPORTED_MODULE_2__IO_js__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Validation_js__ = __webpack_require__(4);
 /* harmony reexport (module object) */ __webpack_require__.d(__webpack_exports__, "Validation", function() { return __WEBPACK_IMPORTED_MODULE_3__Validation_js__; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__helpers_js__ = __webpack_require__(0);
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "curryN", function() { return __WEBPACK_IMPORTED_MODULE_4__helpers_js__["a"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "curry", function() { return __WEBPACK_IMPORTED_MODULE_4__helpers_js__["b"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "compose", function() { return __WEBPACK_IMPORTED_MODULE_4__helpers_js__["c"]; });
+
+
 
 
 
