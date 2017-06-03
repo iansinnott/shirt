@@ -89,6 +89,10 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 /**
  * NOTE: recursiveArgs is used in the recursive case, but will generally not be
  * used in the initial invocation by the user
+ *
+ * Although this is not taken from Ramda their original approach might be worth
+ * a look if refactoring:
+ * https://github.com/ramda/ramda/blob/v0.5.0/ramda.js#L297-L309
  */
 var curryN = function curryN(n, f) {
   var recursiveArgs = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];

@@ -25,6 +25,7 @@ export const Right = (x) => ({
   map: (f) => Right(f(x)),
   chain: (f) => f(x),
   fold: (f, g) => g(x),
+  foldOr: (f) => x,
   toString: () => `Right(${x})`,
 });
 
@@ -36,6 +37,7 @@ export const Left = (x) => ({
   map: (f) => Left(x),
   chain: (f) => Left(x),
   fold: (f, g) => f(x),
+  foldOr: (f) => f(x),
   toString: () => `Left(${x})`,
 });
 

@@ -2,6 +2,8 @@ import { compose } from './helpers.js';
 
 import { tryCatch } from './Either.js';
 
+const identity = x => x;
+
 /**
  * Wraps the execution of a function so that:
  *
@@ -25,6 +27,8 @@ export const IO = (f) => ({
   },
   fold: (left, right) =>
     tryCatch(f).fold(left, right),
+  foldOr: (left) =>
+    tryCatch(f).fold(left, identity),
 });
 
 IO.of = x => IO(() => x);

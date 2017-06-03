@@ -31,9 +31,15 @@ test('Either', t => {
     t.is(err.message, 'Expected error');
   }, id);
 
+  const maybeErr = tryCatch(willThrow).foldOr(id);
+  t.true(maybeErr instanceof Error);
+  t.is(maybeErr.message, 'Expected error');
+
   tryCatch(() => 'innocuous').fold(id, x => {
     t.is(x, 'innocuous');
   });
+
+  t.is('innocuous', tryCatch(() => 'innocuous').foldOr(always('caught')));
 });
 
 test('IO', t => {
@@ -44,10 +50,20 @@ test('IO', t => {
     .map(x => x.toLowerCase())
     .fold(always('caught'), id));
 
+  // Catches errors using foldOr
+  t.is('caught', IO.of(8)
+    .map(x => x.toLowerCase())
+    .foldOr(always('caught')));
+
   // Works as expected
   t.is('str', IO.of('STR')
     .map(x => x.toLowerCase())
     .fold(always('caught'), id));
+
+  // Works as expected using foldOr
+  t.is('str', IO.of('STR')
+    .map(x => x.toLowerCase())
+    .foldOr(always('caught')));
 
   let interim;
 
