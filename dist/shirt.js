@@ -197,11 +197,18 @@ var Right = function Right(x) {
     map: function map(f) {
       return Right(f(x));
     },
+    tap: function tap(f) {
+      f(x); // Just runs it, but completely ignores the output
+      return Right(x);
+    },
     chain: function chain(f) {
       return f(x);
     },
     fold: function fold(f, g) {
       return g(x);
+    },
+    foldOr: function foldOr(f) {
+      return x;
     },
     toString: function toString() {
       return 'Right(' + x + ')';
@@ -220,10 +227,17 @@ var Left = function Left(x) {
     map: function map(f) {
       return Left(x);
     },
+    tap: function tap(f) {
+      f(x); // Just runs it, but completely ignores the output
+      return Left(x);
+    },
     chain: function chain(f) {
       return Left(x);
     },
     fold: function fold(f, g) {
+      return f(x);
+    },
+    foldOr: function foldOr(f) {
       return f(x);
     },
     toString: function toString() {
@@ -267,6 +281,17 @@ var either = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["b"
 
 
 
+var identity = function identity(x) {
+  return x;
+};
+
+var _tap = function _tap(f) {
+  return function (x) {
+    f(x);
+    return x;
+  };
+};
+
 /**
  * Wraps the execution of a function so that:
  *
@@ -284,6 +309,9 @@ var IO = function IO(f) {
     map: function map(g) {
       return IO(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["c" /* compose */])(g, f));
     },
+    tap: function tap(g) {
+      return IO(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__helpers_js__["c" /* compose */])(_tap(g), f));
+    },
     chain: function chain(g) {
       return IO(function () {
         var next = g(f()); // Must return IO
@@ -295,6 +323,9 @@ var IO = function IO(f) {
     },
     fold: function fold(left, right) {
       return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Either_js__["tryCatch"])(f).fold(left, right);
+    },
+    foldOr: function foldOr(left) {
+      return __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__Either_js__["tryCatch"])(f).fold(left, identity);
     }
   };
 };

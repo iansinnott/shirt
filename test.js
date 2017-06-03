@@ -39,6 +39,28 @@ test('Either', t => {
     t.is(x, 'innocuous');
   });
 
+  tryCatch(() => 'yeah')
+    .map(x => x.toUpperCase())
+    .tap((x) => {
+      t.is(x, 'YEAH');
+      return 'hey';
+    })
+    .tap((x) => {
+      t.is(x, 'YEAH');
+    })
+    .foldOr(t.fail);
+
+  tryCatch(willThrow)
+    .map(x => x.toUpperCase())
+    .tap((x) => {
+      t.true(x instanceof Error);
+      return 'hey';
+    })
+    .tap((x) => {
+      t.true(x instanceof Error);
+    })
+    .fold(() => null, t.fail)
+
   t.is('innocuous', tryCatch(() => 'innocuous').foldOr(always('caught')));
 });
 
@@ -48,6 +70,13 @@ test('IO', t => {
   // Catches errors
   t.is('caught', IO.of(8)
     .map(x => x.toLowerCase())
+    .tap(x => {
+      t.true(x instanceof Error)
+      return 'hey'; // Should be ignored
+    })
+    .tap((x) => {
+      t.true(x instanceof Error)
+    })
     .fold(always('caught'), id));
 
   // Catches errors using foldOr
@@ -58,6 +87,13 @@ test('IO', t => {
   // Works as expected
   t.is('str', IO.of('STR')
     .map(x => x.toLowerCase())
+    .tap(x => {
+      t.is(x, 'str')
+      return 'hey'; // Should be ignored
+    })
+    .tap((x) => {
+      t.is(x, 'str')
+    })
     .fold(always('caught'), id));
 
   // Works as expected using foldOr

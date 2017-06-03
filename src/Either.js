@@ -23,6 +23,10 @@ export const Right = (x) => ({
   isLeft: false,
   isRight: true,
   map: (f) => Right(f(x)),
+  tap: (f) => {
+    f(x); // Just runs it, but completely ignores the output
+    return Right(x);
+  },
   chain: (f) => f(x),
   fold: (f, g) => g(x),
   foldOr: (f) => x,
@@ -35,6 +39,10 @@ export const Left = (x) => ({
   isLeft: true,
   isRight: false,
   map: (f) => Left(x),
+  tap: (f) => {
+    f(x); // Just runs it, but completely ignores the output
+    return Left(x);
+  },
   chain: (f) => Left(x),
   fold: (f, g) => f(x),
   foldOr: (f) => f(x),

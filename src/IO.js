@@ -4,6 +4,11 @@ import { tryCatch } from './Either.js';
 
 const identity = x => x;
 
+const tap = (f) => (x) => {
+  f(x);
+  return x;
+};
+
 /**
  * Wraps the execution of a function so that:
  *
@@ -18,6 +23,9 @@ const identity = x => x;
 export const IO = (f) => ({
   fn: f,
   map: (g) => IO(compose(g, f)),
+  tap: (g) => {
+    return IO(compose(tap(g), f));
+  },
   chain: (g) => IO(() => {
     const next = g(f()); // Must return IO
     return next.fn();
