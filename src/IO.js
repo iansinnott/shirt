@@ -1,4 +1,4 @@
-import { compose } from './helpers.js';
+import { compose } from './fn.js';
 
 import { tryCatch } from './Either.js';
 

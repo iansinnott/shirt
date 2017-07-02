@@ -12,13 +12,14 @@
   },
   "scripts": {
     "test": "ava",
+    "test:watch": "ava --verbose --watch",
     "build": "webpack",
     "bump": "npm version patch -m \"v%s\"",
     "bump:minor": "npm version minor -m \"v%s\"",
     "bump:major": "npm version major -m \"v%s\"",
-    "preversion": "npm test",
+    "preversion": "yarn test",
     "postversion": "git push && git push --tags",
-    "prepublish": "npm run build"
+    "prepublish": "yarn run build"
   },
   "ava": {
     "require": [
@@ -43,7 +44,7 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "ava": "^0.17.0",
+    "ava": "^0.20.0",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",

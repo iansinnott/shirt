@@ -1,4 +1,4 @@
-import { curry } from './helpers.js';
+import { curry } from './fn.js';
 
 /**
  * Either itself is abstract and does not hav ea concrete implementation

@@ -1,4 +1,4 @@
-import { curry, curryN } from './helpers.js';
+import { curry, curryN } from './fn.js';
 
 const T = () => true;
 
