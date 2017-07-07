@@ -54,14 +54,60 @@ const twice = a => a + a; // NOTE: `double` is a reserved word
 const negate = a => a * -1;
 const isEven = x => x % 2 === 0;
 
-test.todo('filter');
-test.todo('find');
-test.todo('findIndex');
-test.todo('forEach');
-test.todo('indexOf');
-test.todo('join');
-test.todo('lastIndexOf');
-test.todo('map');
+test('filter', t => {
+  const arr = [1,2,3];
+  t.deepEqual(filter(isEven)(arr), arr.filter(isEven));
+});
+
+test('find', t => {
+  const arr = [1,2,3];
+  t.is(find(isEven)(arr), arr.find(isEven));
+  t.is(find(isEven)([1,3]), undefined);
+});
+
+test('findIndex', t => {
+  const arr = [1,2,3];
+  t.is(findIndex(isEven)(arr), arr.findIndex(isEven));
+  t.is(findIndex(isEven)([1,3]), -1);
+});
+
+test('forEach', t => {
+  const evens = [];
+  const indexes = [];
+  forEach((x, i) => {
+    if (isEven(x)) evens.push(x);
+    indexes.push(i);
+  })([1,2,3,4]);
+
+  t.deepEqual(evens, [2,4]);
+  t.deepEqual(indexes, [0,1,2,3]);
+});
+
+test('indexOf', t => {
+  const arr = [1,2,3];
+  t.is(indexOf(2)(arr), arr.indexOf(2));
+  t.is(indexOf(2)([1,3]), -1);
+});
+
+test('join', t => {
+  const arr = [1,2,3];
+  t.is(join(',')(arr), '1,2,3');
+  t.is(join('<>')(arr), '1<>2<>3');
+  t.is(join('')(arr), '123');
+});
+
+test('lastIndexOf', t => {
+  const arr = [1,2,3];
+  t.is(lastIndexOf(3)(arr), arr.lastIndexOf(3));
+  t.is(lastIndexOf(3)([1,2]), -1);
+});
+
+test('map', t => {
+  const arr = [1,2,3];
+  t.deepEqual(map(isEven)(arr), [false, true, false]);
+  t.deepEqual(map(parseInt)(['1', '2', '3']), [1, NaN, NaN]); // Still comes with all arguments, not unary map
+});
+
 test.todo('reduce');
 test.todo('reduceRight');
 test.todo('sort');

@@ -126,8 +126,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return allPass; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return anyPass; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return equals; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return partition; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "U", function() { return pick; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return complement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "U", function() { return partition; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "V", function() { return pick; });
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var identity = function identity(x) {
@@ -355,8 +356,29 @@ var tap = function tap(f) {
 var allPass = null;
 var anyPass = null;
 var equals = null; // Deep equals
-var partition = null;
-var pick = null;
+
+var complement = function complement(f) {
+  return function () {
+    return !f.apply(undefined, arguments);
+  };
+};
+
+var partition = function partition(f) {
+  return function (xs) {
+    return [xs.filter(f), xs.filter(complement(f))];
+  };
+};
+
+var pick = function pick(keys) {
+  return function (obj) {
+    return keys.reduce(function (agg, k) {
+      if (obj[k]) {
+        agg[k] = obj[k];
+      }
+      return agg;
+    }, {});
+  };
+};
 
 /***/ }),
 /* 1 */
@@ -746,8 +768,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "allPass", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["Q"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "anyPass", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["R"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "equals", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["S"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "partition", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["T"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "pick", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["U"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "complement", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["T"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "partition", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["U"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "pick", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["V"]; });
 
 
 
