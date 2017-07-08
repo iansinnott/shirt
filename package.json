@@ -42,7 +42,9 @@
     "either",
     "validation"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "lodash.isequal": "^4.5.0"
+  },
   "devDependencies": {
     "ava": "^0.20.0",
     "babel-core": "^6.22.1",

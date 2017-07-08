@@ -19,6 +19,10 @@ import {
   join,
   lastIndexOf,
   map,
+  type,
+  first,
+  head,
+  last,
   reduce,
   reduceRight,
   sort,
@@ -108,21 +112,121 @@ test('map', t => {
   t.deepEqual(map(parseInt)(['1', '2', '3']), [1, NaN, NaN]); // Still comes with all arguments, not unary map
 });
 
-test.todo('reduce');
-test.todo('reduceRight');
-test.todo('sort');
-test.todo('includes');
-test.todo('toString');
+test('first', t => {
+  const nums = [1,2,3,4,5];
+  t.is(first(nums), 1);
+  t.deepEqual(first([{ bleh: true }, 'second', 'third']), { bleh: true });
+});
+
+test('last', t => {
+  const nums = [1,2,3,4,5];
+  t.is(last(nums), 5);
+  t.deepEqual(last([{ bleh: true }, 'second', 'third']), 'third');
+});
+
+test('reduce', t => {
+  const nums = [1,2,3,4,5];
+  const subtract = (a, b) => a - b;
+  t.is(reduce(sum, 0)(nums), nums.reduce(sum, 0));
+  t.is(reduce(subtract, first(nums))(nums), nums.reduce(subtract, first(nums))); // Must provide initial value
+});
+
+test('reduceRight', t => {
+  const nums = [1,2,3,4,5];
+  const subtract = (a, b) => a - b;
+  t.is(reduceRight(sum, 0)(nums), nums.reduceRight(sum, 0));
+  t.is(reduceRight(subtract, first(nums))(nums), nums.reduceRight(subtract, first(nums))); // Must provide initial value
+});
+
+test('type', t => {
+  t.is(type({}), 'Object');
+  t.is(type(1), 'Number');
+  t.is(type(false), 'Boolean');
+  t.is(type('s'), 'String');
+  t.is(type(null), 'Null');
+  t.is(type([]), 'Array');
+  t.is(type(/[A-z]/), 'RegExp');
+  t.is(type(new RegExp('a', 'gmi')), 'RegExp');
+  t.is(type(() => {}), 'Function');
+  t.is(type(undefined), 'Undefined');
+  t.is(type(new Date()), 'Date');
+});
+
+test('sort', t => {
+  const list = [3, 1, 8, 1, 2, 5];
+
+  t.deepEqual(sort((a, b) => a - b)([3, 1, 8, 1, 2, 5]), [1, 1, 2, 3, 5, 8]);
+  t.deepEqual(sort((a, b) => a - b)(list), [1, 1, 2, 3, 5, 8]);
+  t.deepEqual(list, [3, 1, 8, 1, 2, 5]);
+
+  const sortByLength = sort((a, b) => a.length - b.length);
+
+  t.deepEqual(
+    sortByLength(['one', 'two', 'three', 'four', 'five', 'six']),
+   ['one', 'two', 'six', 'four', 'five', 'three']
+  );
+});
+
+test('includes', t => {
+  const list = [3, 1, 8, 1, 2, 5];
+  const str = 'hey there you';
+
+  t.true(includes(1)(list));
+  t.false(includes(-1)(list));
+  t.true(includes('hey')(str));
+  t.true(includes('e y')(str));
+  t.false(includes('unicorn')(str));
+});
+
+test('toString', t => {
+  t.is(toString(true), 'true');
+  t.is(toString(false), 'false');
+  t.is(toString(null), 'null');
+  t.is(toString(undefined), 'undefined');
+});
+
+test('toUpperCase', t => {
+  t.is(toUpperCase('hey'), 'HEY');
+  t.is(toUpperCase('HEY'), 'HEY');
+  t.throws(() => toUpperCase({}));
+  t.throws(() => toUpperCase([]));
+  t.throws(() => toUpperCase(null));
+  t.throws(() => toUpperCase(undefined));
+});
+
+test('toLowerCase', t => {
+  t.is(toLowerCase('hey'), 'hey');
+  t.is(toLowerCase('HEY'), 'hey');
+  t.throws(() => toLowerCase({}));
+  t.throws(() => toLowerCase([]));
+  t.throws(() => toLowerCase(null));
+  t.throws(() => toLowerCase(undefined));
+});
+
+test('test', t => {
+  t.false(testStr(/\w+/)(''));
+  t.true(testStr(/\w+/)('hey'));
+});
+
+test('trim', t => {
+  t.is(trim('  hey  '), 'hey');
+  t.is(trim('  hey\nmore\n'), 'hey\nmore');
+});
+
+test('startsWith', t => {
+  t.true(startsWith('hey')('hey you'));
+  t.false(startsWith('hey')('you hey'));
+});
+
+test('endsWith', t => {
+  t.false(endsWith('hey')('hey you'));
+  t.true(endsWith('hey')('you hey'));
+});
+
 test.todo('match');
 test.todo('repeat');
 test.todo('replace');
 test.todo('slice');
-test.todo('startsWith');
-test.todo('endsWith');
-test.todo('trim');
-test.todo('testStr');
-test.todo('toUpper');
-test.todo('toLower');
 test.todo('toPairs');
 test.todo('fromPairs');
 test.todo('allPass');
@@ -172,7 +276,7 @@ test('tap', t => {
   t.deepEqual(tapped, arr);
 });
 
-test.failing('equals', t => {
+test('equals', t => {
   let a = [];
   let b = a;
   // tests for deep equality of its operands
