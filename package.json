@@ -1,6 +1,6 @@
 {
   "name": "shirt",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "Simple algebraic data types for javascript and functional programming utilities",
   "license": "MIT",
   "main": "./dist/index.js",
