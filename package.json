@@ -1,9 +1,18 @@
 {
   "name": "shirt",
   "version": "0.4.0",
-  "description": "Simple algebraic data types for javascript",
+  "description": "Simple algebraic data types for javascript and functional programming utilities",
   "license": "MIT",
-  "main": "./dist/shirt.js",
+  "main": "./dist/index.js",
+  "files": [
+    "./dist/index.js",
+    "./dist/shirt.js",
+    "./dist/fn.js",
+    "./dist/Either.js",
+    "./dist/IO.js",
+    "./dist/Maybe.js",
+    "./dist/Validation.js"
+  ],
   "repository": "iansinnott/shirt",
   "author": {
     "name": "Ian Sinnott",
@@ -13,7 +22,7 @@
   "scripts": {
     "test": "ava",
     "test:watch": "ava --verbose --watch",
-    "build": "webpack",
+    "build": "webpack && babel --out-dir=./dist --ignore=./src/fn.test.js src",
     "bump": "npm version patch -m \"v%s\"",
     "bump:minor": "npm version minor -m \"v%s\"",
     "bump:major": "npm version major -m \"v%s\"",
@@ -32,9 +41,6 @@
       "babel-preset-stage-1"
     ]
   },
-  "files": [
-    "dist/shirt.js"
-  ],
   "keywords": [
     "functional",
     "monads",
@@ -47,6 +53,7 @@
   },
   "devDependencies": {
     "ava": "^0.20.0",
+    "babel-cli": "^6.24.1",
     "babel-core": "^6.22.1",
     "babel-loader": "^6.2.10",
     "babel-preset-es2015": "^6.22.0",

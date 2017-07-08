@@ -102,9 +102,9 @@ return /******/ (function(modules) { // webpackBootstrap
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return map; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return reduce; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return reduceRight; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return sort; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return includes; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return toString; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return includes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return toString; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return sort; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return toUpperCase; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return toLowerCase; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return match; });
@@ -278,19 +278,32 @@ var reduceRight = function reduceRight(f, initial) {
     return xs.reduceRight(f, initial);
   };
 };
-var sort = function sort(f) {
-  return function (xs) {
-    return xs.sort(f);
-  };
-}; // f :: a, b -> Number
 var includes = function includes(v) {
   return function (xs) {
     return xs.includes(v);
   };
 };
+
 var toString = function toString(v) {
-  return v.toString();
+  if (isNil(v)) {
+    return toLower(type(v));
+  } else if (type(v.toString) === 'Function') {
+    return v.toString();
+  } else {
+    // Can't honestly think of what would get to this, but its JS so i'm sure
+    // there's something
+    throw new Error('Could not stringify ' + v);
+  }
 };
+
+// This is not technically a dispatcher since its functionality does differ from
+// standard JS. It creates a copy of the array before sorting it so the original
+// array remains the way it was.
+var sort = function sort(f) {
+  return function (xs) {
+    return xs.slice().sort(f);
+  };
+}; // Non-mutative. f :: a, b -> Number
 
 // String
 var toUpperCase = function toUpperCase(str) {
@@ -367,7 +380,10 @@ var type = function type(x) {
   return x === null ? 'Null' : x === undefined ? 'Undefined' : Object.prototype.toString.call(x).slice(8, -1);
 };
 
-// Deep equals
+// Deep equals. This one is take straight from ramda. I was going to write my
+// own but this is a pretty important one and they are doing a lot of stuff I
+// wasn't going to bother with. So, for now we'll just use theirs. Minus the
+// overhead of the rest of ramda.
 var equals = function equals(a, b) {
   return _equals(a, b, [], []);
 };
@@ -407,6 +423,9 @@ var pick = function pick(keys) {
   };
 };
 
+/* Helpers
+ * ======================================================================= */
+
 var _arrayFromIterator = function _arrayFromIterator(iterator) {
   var result = [];
   var next = void 0;
@@ -415,9 +434,11 @@ var _arrayFromIterator = function _arrayFromIterator(iterator) {
   }
   return result;
 };
+
 var _functionName = function _functionName(f) {
   return f.name;
 };
+
 var _has = function _has(prop, obj) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
@@ -890,9 +911,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "map", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["s"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "reduce", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["t"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "reduceRight", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["u"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "sort", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["v"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "includes", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["w"]; });
-/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "toString", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["x"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "includes", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["v"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "toString", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["w"]; });
+/* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "sort", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["x"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "toUpperCase", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["y"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "toLowerCase", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["z"]; });
 /* harmony namespace reexport (by provided) */ __webpack_require__.d(__webpack_exports__, "match", function() { return __WEBPACK_IMPORTED_MODULE_4__fn_js__["A"]; });
